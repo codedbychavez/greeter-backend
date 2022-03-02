@@ -23,7 +23,7 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Go Get - Download Go packages and their dependencies'
 
-# Sonar Cloud -->  Prepare Analysis Configuratio
+# Sonar Cloud -->  Prepare Analysis Configuration
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'SonarCloud Connection'
@@ -40,11 +40,21 @@ steps:
     command: 'build'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Go Build - Builds the Go application'
+
+# Sonar Cloud -->  Run Code Analysis
+- task: SonarCloudAnalyze@1
+
 - task: CopyFiles@2
   inputs:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Build artificats'
+
 - task: PublishBuildArtifacts@1
   inputs:
      artifactName: drop
   displayName: 'Publish Artifacts'
+
+# Sonar Cloud -->  Publish Quality Gate Result
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
