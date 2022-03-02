@@ -11,21 +11,22 @@ pool:
   name: Self Hosted Agents
 
 steps: 
-- task: GoTool@0
-  inputs:
-    version: '1.13.5'
 - task: Go@0
   inputs:
     command: 'get'
     arguments: '-d'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+  displayName: 'Go Get - Download Go packages and their dependencies'
 - task: Go@0
   inputs:
     command: 'build'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+  displayName: 'Go Build - Builds the Go application'
 - task: CopyFiles@2
   inputs:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Create artificats'
 - task: PublishBuildArtifacts@1
   inputs:
      artifactName: drop
+  displayName: 'Publish Artifacts'
