@@ -11,6 +11,10 @@ pool:
   name: Self Hosted Agents
 
 steps: 
+- task: GoTool@0
+  inputs:
+    version: '1.13.5'
+  displayName: 'Download and Install Go'
 - task: Go@0
   inputs:
     command: 'get'
@@ -25,7 +29,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Create artificats'
+  displayName: 'Build artificats'
 - task: PublishBuildArtifacts@1
   inputs:
      artifactName: drop
