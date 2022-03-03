@@ -43,6 +43,7 @@ steps:
 
 # Sonar Cloud -->  Run Code Analysis
 - task: SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
 
 - task: CopyFiles@2
   inputs:
@@ -58,3 +59,4 @@ steps:
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
+  displayName: Publish quality gate result
