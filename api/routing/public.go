@@ -12,5 +12,10 @@ func CreatePublicRoutes(router fiber.Router, controllerManager controllers.Contr
 		return c.Next()
 	})
 
+	// A status route to check that the router is OK
+	router.Get("/status", func(c *fiber.Ctx) error {
+		return c.SendString("OK")
+	})
+
 	router.Post("/hello", controllerManager.HelloController.ReturnGreeting)
 }

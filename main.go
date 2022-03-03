@@ -32,6 +32,22 @@ func main() {
 		}
 	}
 
+	app := Setup()
+
+	env, ok := viper.Get("ENVIRONMENT").(string)
+
+	if !ok {
+		err := errors.New("ENVIRONMENT not found")
+		fmt.Println(err)
+	}
+
+	fmt.Println("Starting server via", "environment", env)
+
+	startServer(app)
+}
+
+// Setup Setup a fiber app with all of its routes
+func Setup() *fiber.App {
 	// Configure cors
 	var corsConfig = cors.Config{
 		AllowOrigins:     "*",
@@ -49,6 +65,7 @@ func main() {
 		Format: "${pid} ${locals:requestid} ${status} - ${method} ${path}\n",
 	}
 
+	// Initialize a new app
 	app := fiber.New(fiberConfig)
 	app.Use(fiberLogger.New(loggerConfig))
 	app.Use(fiberRecover.New())
@@ -60,17 +77,10 @@ func main() {
 	baseRouter := app.Group("/api/v1")
 	routing.CreatePublicRoutes(baseRouter, controllerManager)
 
-	env, ok := viper.Get("ENVIRONMENT").(string)
-
-	if !ok {
-		err := errors.New("ENVIRONMENT not found")
-		fmt.Println(err)
-	}
-
-	fmt.Println("Starting server via", "environment", env)
-
-	startServer(app)
+	// Return the configured app
+	return app
 }
+
 
 func startServer(app *fiber.App) {
 	port, ok := viper.Get("PORT").(string)

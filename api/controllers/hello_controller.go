@@ -26,5 +26,5 @@ func (ctrl HelloController) ReturnGreeting(c *fiber.Ctx) error {
 
 	greeting := "Hello, " + personName + "!"
 
-	return c.JSON(greeting)
+	return c.SendString(greeting)
 }
