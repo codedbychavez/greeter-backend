@@ -45,7 +45,7 @@ steps:
   inputs:
     command: 'test'
     arguments: '-v'
-    workingDirectory: '$(modulePath)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Go Test - Run Go Unit Tests'
 
 # Sonar Cloud -->  Run Code Analysis
