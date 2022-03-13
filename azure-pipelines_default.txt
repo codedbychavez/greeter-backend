@@ -41,6 +41,13 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Go Build - Builds the Go application'
 
+- task: Go@0
+  inputs:
+    command: 'test'
+    arguments: '-v'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+  displayName: 'Go Test - Run Go Unit Tests'
+
 # Sonar Cloud -->  Run Code Analysis
 - task: SonarCloudAnalyze@1
   displayName: 'Run Code Analysis'
